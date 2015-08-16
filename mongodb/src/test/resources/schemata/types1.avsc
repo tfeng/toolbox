@@ -1,0 +1,50 @@
+{
+  "type": "record",
+  "name": "Types1",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "objectId",
+      "type": {
+        "type": "string",
+        "mongo-class" : "org.bson.types.ObjectId"
+      },
+      "mongo-name": "_id"
+    },
+    {
+      "name": "bsonTimestamp1",
+      "type": {
+        "type": "string",
+        "mongo-class" : "org.bson.types.BSONTimestamp"
+      }
+    },
+    {
+      "name": "bsonTimestamp2",
+      "type": {
+        "type": "long",
+        "mongo-class" : "org.bson.types.BSONTimestamp"
+      }
+    },
+    {
+      "name": "date1",
+      "type": {
+        "type": "string",
+        "mongo-class" : "java.util.Date"
+      }
+    },
+    {
+      "name": "date2",
+      "type": {
+        "type": "long",
+        "mongo-class" : "java.util.Date"
+      }
+    },
+    {
+      "name": "mongoString",
+      "type": {
+        "type": "string",
+        "mongo-class": "java.lang.Object"
+      }
+    }
+  ]
+}

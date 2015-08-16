@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "Arrays",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "arrays",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": "int"
+          }
+        }
+      }
+    }
+  ]
+}

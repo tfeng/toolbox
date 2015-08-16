@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "name": "StringArray",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "array",
+      "type": ["null",
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "record",
+  "name": "Ids",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "id",
+      "type": {
+        "type": "string",
+        "mongo-class" : "org.bson.types.ObjectId"
+      },
+      "mongo-name": "_id"
+    },
+    {
+      "name": "nested",
+      "type": {
+        "type": "record",
+        "name": "IdNested",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "type": "string",
+              "mongo-class" : "org.bson.types.ObjectId"
+            },
+            "mongo-name": "_id"
+          }
+        ]
+      }
+    }
+  ]
+}

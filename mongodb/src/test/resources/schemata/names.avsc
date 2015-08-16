@@ -1,0 +1,26 @@
+{
+  "type": "record",
+  "name": "Names",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "mongo-name": "_id"
+    },
+    {
+      "name": "nested",
+      "type": {
+        "type": "record",
+        "name": "NameNested",
+        "fields": [
+          {
+            "name": "id",
+            "type": "string",
+            "mongo-name": "_id"
+          }
+        ]
+      }
+    }
+  ]
+}

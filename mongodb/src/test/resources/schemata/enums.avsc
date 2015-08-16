@@ -1,0 +1,48 @@
+{
+  "type": "record",
+  "name": "Enums",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "enum1",
+      "type": {
+        "name": "Enum1",
+        "type": "enum",
+        "symbols": ["X", "Y", "Z"]
+      }
+    },
+    {
+      "name": "enum2",
+      "type": [ "null",
+        {
+          "name": "Enum2",
+          "type": "enum",
+          "symbols": ["A", "B"]
+        }
+      ]
+    },
+    {
+      "name": "enum3",
+      "type": [ "null",
+        {
+          "name": "Enum3",
+          "type": "enum",
+          "symbols": ["C", "D"]
+        }
+      ]
+    },
+    {
+      "name": "enum4",
+      "type": {
+        "type": "array",
+        "items": [ "null",
+          {
+            "name": "Enum4",
+            "type": "enum",
+            "symbols": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+          }
+        ]
+      }
+    }
+  ]
+}

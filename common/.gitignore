@@ -1,0 +1,13 @@
+.history
+/*.iml
+/.classpath
+/.idea
+/.idea_modules
+/.project
+/.settings/
+/bin/
+/dist/
+/out/
+/project/project/
+/project/target/
+/target/

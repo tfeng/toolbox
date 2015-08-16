@@ -1,0 +1,94 @@
+{
+  "type": "record",
+  "name": "Records",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "record1",
+      "type": {
+        "type": "record",
+        "name": "Record1",
+        "fields": [
+          {
+            "name": "i",
+            "type": "int"
+          }
+        ]
+      }
+    },
+    {
+      "name": "record2",
+      "type": {
+        "type": "record",
+        "name": "Record2",
+        "fields": [
+          {
+            "name": "l",
+            "type": "long"
+          },
+          {
+            "name": "record21",
+            "type": {
+              "type": "record",
+              "name": "Record21",
+              "fields": [
+                {
+                  "name": "s",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "record3",
+      "type": {
+        "type": "record",
+        "name": "Record3",
+        "fields": [
+          {
+            "name": "record31",
+            "type": {
+              "type": "record",
+              "name": "Record31",
+              "fields": [
+                {
+                  "name": "f",
+                  "type": "float"
+                },
+                {
+                  "name": "record311",
+                  "type": {
+                    "type": "record",
+                    "name": "Record311",
+                    "fields": [
+                      {
+                        "name": "d",
+                        "type": "double"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "record32",
+            "type": {
+              "type": "record",
+              "name": "Record32",
+              "fields": [
+                {
+                  "name": "b",
+                  "type": "boolean"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

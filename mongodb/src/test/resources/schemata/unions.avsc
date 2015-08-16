@@ -1,0 +1,52 @@
+{
+  "type": "record",
+  "name": "Unions",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "union1",
+      "type": [ "null", "int" ]
+    },
+    {
+      "name": "union2",
+      "type": [ "null",
+        {
+          "name": "Union2",
+          "type": "record",
+          "fields": [
+            {
+              "name": "union21",
+              "type": [ "long", "null" ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "union3",
+      "type": [ "null",
+        {
+          "type": "array",
+          "items": [ "null", "boolean" ]
+        }
+      ]
+    },
+    {
+      "name": "union4",
+      "type": [ "null",
+        {
+          "type": "map",
+          "values": [ "string", "null" ]
+        }
+      ]
+    },
+    {
+      "name": "union5",
+      "type": [ "null", "float" ]
+    },
+    {
+      "name": "union6",
+      "type": [ "double", "null" ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "type": "record",
+  "name": "Primitives",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "i",
+      "type": "int"
+    },
+    {
+      "name": "l",
+      "type": "long"
+    },
+    {
+      "name": "s",
+      "type": "string"
+    },
+    {
+      "name": "b",
+      "type": "boolean"
+    },
+    {
+      "name": "f",
+      "type": "float"
+    },
+    {
+      "name": "d",
+      "type": "double"
+    },
+    {
+      "name": "n",
+      "type": "null"
+    },
+    {
+      "name": "by",
+      "type": "bytes"
+    }
+  ]
+}

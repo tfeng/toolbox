@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "Maps",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "maps",
+      "type": {
+        "type": "map",
+        "values": {
+          "type": "map",
+          "values": "int"
+        }
+      }
+    }
+  ]
+}

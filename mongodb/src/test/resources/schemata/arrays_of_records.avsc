@@ -1,0 +1,35 @@
+{
+  "type": "record",
+  "name": "ArraysOfRecords",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "array",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "RecordInArray",
+          "type": "record",
+          "fields": [
+            {
+              "name": "e",
+              "type": {
+                "name": "RecordInArrayEnum",
+                "type": "enum",
+                "symbols": ["A", "B", "C"]
+              }
+            },
+            {
+              "name": "i",
+              "type": "int"
+            },
+            {
+              "name": "l",
+              "type": "long"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

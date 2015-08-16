@@ -1,0 +1,40 @@
+{
+  "type": "record",
+  "name": "OplogItem",
+  "namespace": "me.tfeng.toolbox.mongodb",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "string",
+      "mongo-name": "ts"
+    },
+    {
+      "name": "changeId",
+      "type": "long",
+      "mongo-name": "h"
+    },
+    {
+      "name": "version",
+      "type": "int",
+      "mongo-name": "v"
+    },
+    {
+      "name": "operation",
+      "type": "string",
+      "mongo-name": "op"
+    },
+    {
+      "name": "namespace",
+      "type": "string",
+      "mongo-name": "ns"
+    },
+    {
+      "name": "document",
+      "type": {
+        "type": "string",
+        "mongo-type": "ANY"
+      },
+      "mongo-name": "o"
+    }
+  ]
+}
