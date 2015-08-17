@@ -8,6 +8,8 @@ object Versions {
 
   val commonsLang3 = "3.4"
 
+  val dustjs = "2.6.1"
+
   val gremlin = "3.0.0.M9-incubating"
 
   val guava = "18.0"
@@ -22,6 +24,8 @@ object Versions {
 
   val junitInterface = "0.11"
 
+  val kafka = "0.8.2.1"
+
   val logback = "1.1.3"
 
   val mongoDb = "3.0.3"
@@ -35,4 +39,6 @@ object Versions {
   val spring = "4.2.0.RELEASE"
 
   val titan = "0.9.0-M2"
+
+  val webjarsLocator = "0.27"
 }
