@@ -16,6 +16,6 @@ lazy val kafka = project in file("kafka") dependsOn(avro)
 
 lazy val dust = project in file("dust") dependsOn(spring)
 
-lazy val mongodb = project in file("mongodb") dependsOn(avro % "test->compile", common % "test->test", spring)
+lazy val mongodb = project in file("mongodb") dependsOn(avro % "test->compile", spring)
 
 lazy val titan = project in file("titan") dependsOn(spring)
