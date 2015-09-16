@@ -16,7 +16,7 @@ object Versions {
 
   val hamcrest = "1.3"
 
-  val httpComponents = "4.4.2"
+  val httpComponents = "4.4.3"
 
   val jackson = "2.5.4"
 
@@ -24,11 +24,11 @@ object Versions {
 
   val junitInterface = "0.11"
 
-  val kafka = "0.8.2.1"
+  val kafka = "0.8.2.2"
 
   val logback = "1.1.3"
 
-  val mongoDb = "3.0.3"
+  val mongoDb = "3.0.4"
 
   val sbtPlugins = "0.5.0"
 
