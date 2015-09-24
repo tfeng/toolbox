@@ -30,10 +30,12 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import com.google.common.collect.ImmutableList;
 
@@ -70,13 +72,13 @@ public class ApplicationManager implements ApplicationContextAware {
     }
   }
 
-  private ApplicationContext applicationContext;
+  private ConfigurableApplicationContext applicationContext;
 
   private List<StartableInterceptor> startableInterceptors = ImmutableList.of(new LoggingStartableInterceptor());
 
   private List<Startable> startables;
 
-  public ApplicationContext getApplicationContext() {
+  public ConfigurableApplicationContext getApplicationContext() {
     return applicationContext;
   }
 
@@ -88,9 +90,15 @@ public class ApplicationManager implements ApplicationContextAware {
     return getApplicationContext().getBean(name, type);
   }
 
+  public void processInjection(Object bean) {
+    AutowiredAnnotationBeanPostProcessor beanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
+    beanPostProcessor.setBeanFactory(getApplicationContext().getBeanFactory());
+    beanPostProcessor.processInjection(bean);
+  }
+
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-    this.applicationContext = applicationContext;
+    this.applicationContext = (ConfigurableApplicationContext) applicationContext;
   }
 
   public void setStartableInterceptors(List<StartableInterceptor> startableInterceptors) {
