@@ -10,7 +10,7 @@ object Versions {
 
   val dustjs = "2.6.1"
 
-  val gremlin = "3.0.0.M9-incubating"
+  val gremlin = "3.0.1-incubating"
 
   val guava = "18.0"
 
@@ -30,7 +30,7 @@ object Versions {
 
   val mongoDb = "3.0.4"
 
-  val sbtPlugins = "0.5.9-SNAPSHOT"
+  val sbtPlugins = "0.5.9"
 
   val scala = "2.10.5"
 
@@ -38,7 +38,7 @@ object Versions {
 
   val spring = "4.2.1.RELEASE"
 
-  val titan = "0.9.0-M2"
+  val titan = "1.0.0"
 
   val webjarsLocator = "0.28"
 }
