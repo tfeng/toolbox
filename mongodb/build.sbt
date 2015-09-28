@@ -13,4 +13,4 @@ libraryDependencies ++= Seq(
 
 SbtAvro.settings
 
-SbtAvro.Keys.schemataDirectories in Test := Seq(baseDirectory.value / "src/test/resources/schemata")
+SbtAvro.Keys.schemataDirectories in Test := Seq(baseDirectory.value / "src" / "test" / "resources" / "schemata")
