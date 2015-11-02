@@ -2,7 +2,7 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.5.12"
+  val project = "0.5.13-SNAPSHOT"
 
   val avro = "1.7.7"
 
@@ -10,13 +10,13 @@ object Versions {
 
   val dustjs = "2.6.1"
 
-  val gremlin = "3.0.1-incubating"
+  val gremlin = "3.0.2-incubating"
 
   val guava = "18.0"
 
   val hamcrest = "1.3"
 
-  val httpComponents = "4.4.3"
+  val httpComponents = "4.4.4"
 
   val jackson = "2.5.4"
 
