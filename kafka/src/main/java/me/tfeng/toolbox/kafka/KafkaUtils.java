@@ -35,8 +35,8 @@ public class KafkaUtils {
   public static void createTopic(String zkServers, int sessionTimeout, int connectionTimeout, String topic,
       int partitions, int replicationFactor) {
     ZkClient zkClient = new ZkClient(zkServers, sessionTimeout, connectionTimeout, new ZkStringSerializer());
-    ZkUtils.setupCommonPaths(zkClient);
-    AdminUtils.createTopic(zkClient, topic, 1, 1, new Properties());
+    ZkUtils zkUtils = ZkUtils.apply(zkClient, false);
+    AdminUtils.createTopic(zkUtils, topic, partitions, replicationFactor, new Properties());
   }
 
   public static void createTopic(String zkServers, String topic, int partitions, int replicationFactor) {
