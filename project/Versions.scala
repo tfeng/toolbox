@@ -2,7 +2,7 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.7.0-SNAPSHOT"
+  val project = "0.7.0"
 
   val avro = "1.8.0"
 
@@ -30,7 +30,7 @@ object Versions {
 
   val mongoDb = "3.2.2"
 
-  val sbtPlugins = "0.7.0-SNAPSHOT"
+  val sbtPlugins = "0.7.0"
 
   val scala = "2.10.5"
 
