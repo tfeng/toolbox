@@ -2,13 +2,13 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.6.0"
+  val project = "0.7.0-SNAPSHOT"
 
-  val avro = "1.7.7"
+  val avro = "1.8.0"
 
   val commonsLang3 = "3.4"
 
-  val dustjs = "2.6.1"
+  val dustjs = "2.6.1-1"
 
   val gremlin = "3.0.2-incubating"
 
@@ -26,19 +26,19 @@ object Versions {
 
   val kafka = "0.9.0.0"
 
-  val logback = "1.1.3"
+  val logback = "1.1.5"
 
-  val mongoDb = "3.2.0"
+  val mongoDb = "3.2.2"
 
-  val sbtPlugins = "0.6.0"
+  val sbtPlugins = "0.7.0-SNAPSHOT"
 
   val scala = "2.10.5"
 
-  val slf4j = "1.7.13"
+  val slf4j = "1.7.16"
 
-  val spring = "4.2.3.RELEASE"
+  val spring = "4.2.4.RELEASE"
 
   val titan = "1.0.0"
 
-  val webjarsLocator = "0.28"
+  val webjarsLocator = "0.30"
 }
