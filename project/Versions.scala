@@ -2,7 +2,7 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.7.0"
+  val project = "0.7.1-SNAPSHOT"
 
   val avro = "1.8.0"
 
@@ -24,19 +24,19 @@ object Versions {
 
   val junitInterface = "0.11"
 
-  val kafka = "0.9.0.0"
+  val kafka = "0.9.0.1"
 
   val logback = "1.1.5"
 
   val mongoDb = "3.2.2"
 
-  val sbtPlugins = "0.7.0"
+  val sbtPlugins = "0.7.1-SNAPSHOT"
 
-  val scala = "2.10.5"
+  val scala = "2.10.6"
 
-  val slf4j = "1.7.16"
+  val slf4j = "1.7.18"
 
-  val spring = "4.2.4.RELEASE"
+  val spring = "4.2.5.RELEASE"
 
   val titan = "1.0.0"
 
