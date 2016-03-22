@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Thomas Feng
+ * Copyright 2016 Thomas Feng
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -62,9 +62,6 @@ import me.tfeng.toolbox.common.Constants;
 public class AvroHelper {
 
   private static final ObjectMapper MAPPER = new ObjectMapper();
-
-  public static final GenericDatumReader<Map<String,ByteBuffer>> META_READER =
-      new GenericDatumReader<>(Schema.createMap(Schema.create(Schema.Type.BYTES)));
 
   public static JsonNode convertFromSimpleRecord(Schema schema, JsonNode json) throws IOException {
     return convertFromSimpleRecord(schema, json, new JsonNodeFactory(false));

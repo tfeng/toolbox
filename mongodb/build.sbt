@@ -11,6 +11,6 @@ libraryDependencies ++= Seq(
   "org.hamcrest" % "hamcrest-all" % Versions.hamcrest % "test"
 )
 
-SbtAvro.settings
+Avro.settings
 
-SbtAvro.Keys.schemataDirectories in Test := Seq(baseDirectory.value / "src" / "test" / "resources" / "schemata")
+Avro.Keys.schemataDirectories in Test := Seq(baseDirectory.value / "src" / "test" / "resources" / "schemata")
