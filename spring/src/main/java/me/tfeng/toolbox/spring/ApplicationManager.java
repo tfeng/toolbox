@@ -56,8 +56,8 @@ public class ApplicationManager implements ApplicationContextAware {
 
     @Override
     public int compare(Entry<String, Startable> bean1, Entry<String, Startable> bean2) {
-      String beanName1 = bean1.getKey();
-      String beanName2 = bean2.getKey();
+      String beanName1 = normalizeBeanName(bean1.getKey());
+      String beanName2 = normalizeBeanName(bean2.getKey());
       BeanDefinition beanDefinition1 = registry.getBeanDefinition(beanName1);
       BeanDefinition beanDefinition2 = registry.getBeanDefinition(beanName2);
       if (beanDefinition1 == null || beanDefinition2 == null) {
@@ -68,6 +68,15 @@ public class ApplicationManager implements ApplicationContextAware {
         return -1;
       } else {
         return beanName1.compareTo(beanName2);
+      }
+    }
+
+    private String normalizeBeanName(String beanName) {
+      if (beanName.startsWith("&")) {
+        // The bean is a factory.
+        return beanName.substring(1);
+      } else {
+        return beanName;
       }
     }
   }
