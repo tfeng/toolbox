@@ -2,7 +2,7 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.8.1-SNAPSHOT"
+  val project = "0.8.1"
 
   val avro = "1.8.0"
 
