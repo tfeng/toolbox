@@ -2,7 +2,7 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.8.1"
+  val project = "0.8.3-SNAPSHOT"
 
   val avro = "1.8.0"
 
@@ -22,13 +22,13 @@ object Versions {
 
   val kafka = "0.9.0.1"
 
-  val logback = "1.1.6"
+  val logback = "1.1.7"
 
   val mongoDb = "3.2.2"
 
   val scala = "2.11.7"
 
-  val slf4j = "1.7.19"
+  val slf4j = "1.7.21"
 
   val spring = "4.2.5.RELEASE"
 
