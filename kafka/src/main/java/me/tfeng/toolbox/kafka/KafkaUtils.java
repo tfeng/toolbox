@@ -21,11 +21,10 @@
 package me.tfeng.toolbox.kafka;
 
 import java.util.Properties;
-
-import org.I0Itec.zkclient.ZkClient;
-
 import kafka.admin.AdminUtils;
+import kafka.admin.RackAwareMode.Enforced$;
 import kafka.utils.ZkUtils;
+import org.I0Itec.zkclient.ZkClient;
 
 /**
  * @author Thomas Feng (huining.feng@gmail.com)
@@ -36,7 +35,7 @@ public class KafkaUtils {
       int partitions, int replicationFactor) {
     ZkClient zkClient = new ZkClient(zkServers, sessionTimeout, connectionTimeout, new ZkStringSerializer());
     ZkUtils zkUtils = ZkUtils.apply(zkClient, false);
-    AdminUtils.createTopic(zkUtils, topic, partitions, replicationFactor, new Properties());
+    AdminUtils.createTopic(zkUtils, topic, partitions, replicationFactor, new Properties(), Enforced$.MODULE$);
   }
 
   public static void createTopic(String zkServers, String topic, int partitions, int replicationFactor) {
