@@ -22,10 +22,8 @@ package me.tfeng.toolbox.avro;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.avro.Protocol;
@@ -165,8 +163,7 @@ public class AvroHelper {
     JsonEncoder encoder = EncoderFactory.get().jsonEncoder(schema, generator);
     writer.write(object, encoder);
     encoder.flush();
-    String json = outputStream.toString();
-    return AvroHelper.convertToSimpleRecord(schema, json);
+    return outputStream.toString();
   }
 
   public static <T> T toRecord(Class<T> recordClass, String json) throws IOException {
@@ -180,6 +177,15 @@ public class AvroHelper {
     json = convertFromSimpleRecord(schema, json);
     SpecificDatumReader<T> reader = new SpecificDatumReader<>(schema);
     return reader.read(null, DecoderFactory.get().jsonDecoder(schema, json));
+  }
+
+  public static String toSimpleJson(IndexedRecord record) throws IOException {
+    Schema schema = record.getSchema();
+    return toSimpleJson(schema, record);
+  }
+
+  public static String toSimpleJson(Schema schema, Object object) throws IOException {
+    return convertToSimpleRecord(schema, toJson(schema, object));
   }
 
   private static JsonNode convertFromSimpleRecord(Schema schema, JsonNode json, JsonNodeFactory factory)
@@ -209,7 +215,7 @@ public class AvroHelper {
       }
       return newNode;
     } else if (schema.getType() == Type.UNION) {
-      Schema type = AvroHelper.getSimpleUnionType(schema);
+      Schema type = getSimpleUnionType(schema);
       if (type == null) {
         if (json.isNull()) {
           return json;
@@ -274,7 +280,7 @@ public class AvroHelper {
       }
       return newNode;
     } else if (schema.getType() == Type.UNION) {
-      Schema type = AvroHelper.getSimpleUnionType(schema);
+      Schema type = getSimpleUnionType(schema);
       if (type == null) {
         if (json.isNull()) {
           return json;

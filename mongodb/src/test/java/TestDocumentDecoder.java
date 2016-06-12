@@ -82,7 +82,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 
   @Test
@@ -93,7 +93,7 @@ public class TestDocumentDecoder {
     DBObject object = (DBObject) JSON.parse(json);
     Record record = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
-    assertThat(AvroHelper.toJson(schema, record), is(json));
+    assertThat(AvroHelper.toSimpleJson(schema, record), is(json));
   }
 
   @Test
@@ -108,7 +108,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 
   @Test
@@ -124,7 +124,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 
   @Test
@@ -141,7 +141,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 
   @Test
@@ -189,7 +189,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     // Convert into JsonNode before comparison, so the maps equal even if keys are reordered.
-    assertThat(JSON.parse(AvroHelper.toJson(schema, record2)), is(JSON.parse(AvroHelper.toJson(schema, record1))));
+    assertThat(JSON.parse(AvroHelper.toSimpleJson(schema, record2)), is(JSON.parse(AvroHelper.toSimpleJson(schema, record1))));
   }
 
   @Test
@@ -249,7 +249,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 
   @Test
@@ -282,7 +282,7 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 
   @Test
@@ -407,6 +407,6 @@ public class TestDocumentDecoder {
     Record record2 = RecordConverter.toRecord(schema, object, getClass().getClassLoader());
 
     assertThat(record2, is(record1));
-    assertThat(AvroHelper.toJson(schema, record2), is(AvroHelper.toJson(schema, record1)));
+    assertThat(AvroHelper.toSimpleJson(schema, record2), is(AvroHelper.toSimpleJson(schema, record1)));
   }
 }
