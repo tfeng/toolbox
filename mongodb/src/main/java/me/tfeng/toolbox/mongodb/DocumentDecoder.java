@@ -91,7 +91,7 @@ public class DocumentDecoder extends Decoder {
     @SuppressWarnings("unchecked")
     public RecordIterator(Schema schema, Object object) {
       fieldIterator = schema.getFields().iterator();
-      map = (Map<String, Object>) object;
+      map = MongoDbTypeConverter.convertFromMongoDbType(Map.class, object);
       initializeFieldNameMap(schema);
     }
 

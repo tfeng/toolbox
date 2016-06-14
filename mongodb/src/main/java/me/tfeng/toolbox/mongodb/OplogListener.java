@@ -22,8 +22,8 @@ package me.tfeng.toolbox.mongodb;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.bson.BsonTimestamp;
 import org.bson.Document;
-import org.bson.types.BSONTimestamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +86,7 @@ public class OplogListener implements Startable {
 
   private String namespace;
 
-  private BSONTimestamp startTimestamp;
+  private BsonTimestamp startTimestamp;
 
   private Thread thread;
 
@@ -112,7 +112,6 @@ public class OplogListener implements Startable {
     stopping.set(true);
     cursor.close();
     LOG.info("Waiting for handler thread to stop");
-    thread.join();
   }
 
   public void setHandler(OplogItemHandler handler) {
@@ -127,7 +126,7 @@ public class OplogListener implements Startable {
     this.namespace = namespace;
   }
 
-  public void setStartTimestamp(BSONTimestamp startTimestamp) {
+  public void setStartTimestamp(BsonTimestamp startTimestamp) {
     this.startTimestamp = startTimestamp;
   }
 

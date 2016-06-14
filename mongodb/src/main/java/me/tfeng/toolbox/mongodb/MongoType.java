@@ -22,7 +22,7 @@ package me.tfeng.toolbox.mongodb;
 
 import java.util.Date;
 
-import org.bson.types.BSONTimestamp;
+import org.bson.BsonTimestamp;
 import org.bson.types.ObjectId;
 
 /**
@@ -33,7 +33,7 @@ public enum MongoType {
   ANY(Object.class),
   DATE(Date.class),
   OBJECT_ID(ObjectId.class),
-  TIMESTAMP(BSONTimestamp.class);
+  TIMESTAMP(BsonTimestamp.class);
 
   private final Class<?> mongoClass;
 

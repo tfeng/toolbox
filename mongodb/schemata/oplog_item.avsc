@@ -5,7 +5,20 @@
   "fields": [
     {
       "name": "timestamp",
-      "type": "string",
+      "type": {
+        "type": "record",
+        "name": "Timestamp",
+        "fields": [
+          {
+            "name": "time",
+            "type": "int"
+          },
+          {
+            "name": "inc",
+            "type": "int"
+          }
+        ]
+      },
       "mongo-name": "ts"
     },
     {
@@ -35,6 +48,14 @@
         "mongo-type": "ANY"
       },
       "mongo-name": "o"
+    },
+    {
+      "name": "query",
+      "type": ["null", {
+        "type": "string",
+        "mongo-type": "ANY"
+      }],
+      "mongo-name": "o2"
     }
   ]
 }

@@ -132,7 +132,7 @@ public class RecordConverter {
       String mongoClassName = schema.getProp(MONGO_CLASS_PROPERTY);
       String mongoType = schema.getProp(MONGO_TYPE_PROPERTY);
       if (object instanceof CharSequence) {
-        object = ((CharSequence) object).toString();
+        object = object.toString();
       }
       if (mongoClassName == null && mongoType == null) {
         return object;

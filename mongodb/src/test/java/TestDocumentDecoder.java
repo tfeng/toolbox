@@ -33,8 +33,8 @@ import org.apache.avro.io.Decoder;
 import org.apache.avro.io.DecoderFactory;
 import org.apache.avro.specific.SpecificDatumReader;
 import org.bson.BSONObject;
+import org.bson.BsonTimestamp;
 import org.bson.Document;
-import org.bson.types.BSONTimestamp;
 import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -298,8 +298,8 @@ public class TestDocumentDecoder {
 
     BasicDBObject object = new BasicDBObject();
     object.put("_id", new ObjectId("5401bf578de2a77380c5489a"));
-    object.put("bsonTimestamp1", new BSONTimestamp(1409385948, 1));
-    object.put("bsonTimestamp2", new BSONTimestamp(1409385948, 1));
+    object.put("bsonTimestamp1", new BsonTimestamp(1409385948, 1));
+    object.put("bsonTimestamp2", new BsonTimestamp(1409385948, 1));
     object.put("date1", MongoDbTypeConverter.DATE_FORMAT.parse("2014-08-31T08:09:34.033Z"));
     object.put("date2", MongoDbTypeConverter.DATE_FORMAT.parse("2014-08-31T08:09:34.033Z"));
     object.put("mongoString", mongoObject);
@@ -323,10 +323,10 @@ public class TestDocumentDecoder {
 
     assertThat(object1.get("_id"), is(new ObjectId("5401bf578de2a77380c5489a")));
     assertThat(object2.get("_id"), is(new ObjectId("5401bf578de2a77380c5489a")));
-    assertThat(object1.get("bsonTimestamp1"), is(new BSONTimestamp(1409385948, 1)));
-    assertThat(object2.get("bsonTimestamp1"), is(new BSONTimestamp(1409385948, 1)));
-    assertThat(object1.get("bsonTimestamp2"), is(new BSONTimestamp(1409385948, 1)));
-    assertThat(object2.get("bsonTimestamp2"), is(new BSONTimestamp(1409385948, 1)));
+    assertThat(object1.get("bsonTimestamp1"), is(new BsonTimestamp(1409385948, 1)));
+    assertThat(object2.get("bsonTimestamp1"), is(new BsonTimestamp(1409385948, 1)));
+    assertThat(object1.get("bsonTimestamp2"), is(new BsonTimestamp(1409385948, 1)));
+    assertThat(object2.get("bsonTimestamp2"), is(new BsonTimestamp(1409385948, 1)));
     assertThat(object1.get("date1"),
         is(MongoDbTypeConverter.DATE_FORMAT.parse("2014-08-31T08:09:34.033Z")));
     assertThat(object2.get("date1"),
@@ -352,8 +352,8 @@ public class TestDocumentDecoder {
 
     BasicDBObject object = new BasicDBObject();
     object.put("_id", new ObjectId("5401bf578de2a77380c5489a"));
-    object.put("bsonTimestamp1", new BSONTimestamp(1409385948, 1));
-    object.put("bsonTimestamp2", new BSONTimestamp(1409385948, 1));
+    object.put("bsonTimestamp1", new BsonTimestamp(1409385948, 1));
+    object.put("bsonTimestamp2", new BsonTimestamp(1409385948, 1));
     object.put("date1", MongoDbTypeConverter.DATE_FORMAT.parse("2014-08-31T08:09:34.033Z"));
     object.put("date2", MongoDbTypeConverter.DATE_FORMAT.parse("2014-08-31T08:09:34.033Z"));
     object.put("mongoString", mongoObject);
@@ -377,10 +377,10 @@ public class TestDocumentDecoder {
 
     assertThat(object1.get("_id"), is(new ObjectId("5401bf578de2a77380c5489a")));
     assertThat(object2.get("_id"), is(new ObjectId("5401bf578de2a77380c5489a")));
-    assertThat(object1.get("bsonTimestamp1"), is(new BSONTimestamp(1409385948, 1)));
-    assertThat(object2.get("bsonTimestamp1"), is(new BSONTimestamp(1409385948, 1)));
-    assertThat(object1.get("bsonTimestamp2"), is(new BSONTimestamp(1409385948, 1)));
-    assertThat(object2.get("bsonTimestamp2"), is(new BSONTimestamp(1409385948, 1)));
+    assertThat(object1.get("bsonTimestamp1"), is(new BsonTimestamp(1409385948, 1)));
+    assertThat(object2.get("bsonTimestamp1"), is(new BsonTimestamp(1409385948, 1)));
+    assertThat(object1.get("bsonTimestamp2"), is(new BsonTimestamp(1409385948, 1)));
+    assertThat(object2.get("bsonTimestamp2"), is(new BsonTimestamp(1409385948, 1)));
     assertThat(object1.get("date1"),
         is(MongoDbTypeConverter.DATE_FORMAT.parse("2014-08-31T08:09:34.033Z")));
     assertThat(object2.get("date1"),

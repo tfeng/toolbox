@@ -31,7 +31,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.bson.types.BSONTimestamp;
+import org.bson.BsonTimestamp;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.google.common.collect.ImmutableMap;
@@ -51,39 +52,52 @@ public class MongoDbTypeConverter {
     S convertToMongoDbType(T object);
   }
 
-  public static class BSONTimestampToLongConverter implements Converter<BSONTimestamp, Long> {
+  public static class BsonTimestampToLongConverter implements Converter<BsonTimestamp, Long> {
 
     @Override
-    public Long convertFromMongoDbType(BSONTimestamp data) {
+    public Long convertFromMongoDbType(BsonTimestamp data) {
       int inc = data.getInc();
       if (inc < 0 || inc >= 1000) {
-        throw new RuntimeException("Overflow occurs while converting BSONTimestamp into long: " + data);
+        throw new RuntimeException("Overflow occurs while converting BsonTimestamp into long: " + data);
       }
       return (long) data.getTime() * 1000 + inc;
     }
 
     @Override
-    public BSONTimestamp convertToMongoDbType(Long object) {
-      return new BSONTimestamp((int) (object / 1000), (int) (object % 1000));
+    public BsonTimestamp convertToMongoDbType(Long object) {
+      return new BsonTimestamp((int) (object / 1000), (int) (object % 1000));
     }
   }
 
-  public static class BSONTimestampToStringConverter implements Converter<BSONTimestamp, String> {
+  public static class BsonTimestampToMapConverter implements Converter<BsonTimestamp, Map<String, Integer>> {
 
     @Override
-    public String convertFromMongoDbType(BSONTimestamp timestamp) {
+    public Map<String, Integer> convertFromMongoDbType(BsonTimestamp timestamp) {
+      return ImmutableMap.of("time", timestamp.getTime(), "inc", timestamp.getInc());
+    }
+
+    @Override
+    public BsonTimestamp convertToMongoDbType(Map<String, Integer> data) {
+      return new BsonTimestamp(data.get("time"), data.get("inc"));
+    }
+  }
+
+  public static class BsonTimestampToStringConverter implements Converter<BsonTimestamp, String> {
+
+    @Override
+    public String convertFromMongoDbType(BsonTimestamp timestamp) {
       return "(" + timestamp.getTime() + ", " + timestamp.getInc() + ")";
     }
 
     @Override
-    public BSONTimestamp convertToMongoDbType(String data) {
+    public BsonTimestamp convertToMongoDbType(String data) {
       Matcher matcher = TIMESTAMP_PATTERN.matcher(data);
       if (!matcher.matches()) {
         throw new RuntimeException("Invalid BSONTimestamp " + data);
       }
       int time = Integer.parseInt(matcher.group(1));
       int inc = Integer.parseInt(matcher.group(2));
-      return new BSONTimestamp(time, inc);
+      return new BsonTimestamp(time, inc);
     }
   }
 
@@ -117,11 +131,24 @@ public class MongoDbTypeConverter {
     }
   }
 
+  public static class DocumentToStringConverter implements Converter<Document, String> {
+
+    @Override
+    public String convertFromMongoDbType(Document document) {
+      return document.toJson();
+    }
+
+    @Override
+    public Document convertToMongoDbType(String data) {
+      return Document.parse(data);
+    }
+  }
+
   public static class ObjectIdToStringConverter implements Converter<ObjectId, String> {
 
     @Override
     public String convertFromMongoDbType(ObjectId objectId) {
-      return objectId.toString();
+      return objectId.toHexString();
     }
 
     @Override
@@ -132,10 +159,12 @@ public class MongoDbTypeConverter {
 
   public static final Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> CONVERTER_MAP =
       ImmutableMap.<Pair<Class<?>, Class<?>>, Converter<?, ?>>builder()
-          .put(ImmutablePair.of(BSONTimestamp.class, Long.class), new BSONTimestampToLongConverter())
-          .put(ImmutablePair.of(BSONTimestamp.class, String.class), new BSONTimestampToStringConverter())
+          .put(ImmutablePair.of(BsonTimestamp.class, Long.class), new BsonTimestampToLongConverter())
+          .put(ImmutablePair.of(BsonTimestamp.class, String.class), new BsonTimestampToStringConverter())
+          .put(ImmutablePair.of(BsonTimestamp.class, Map.class), new BsonTimestampToMapConverter())
           .put(ImmutablePair.of(Date.class, Long.class), new DateToLongConverter())
           .put(ImmutablePair.of(Date.class, String.class), new DateToStringConverter())
+          .put(ImmutablePair.of(Document.class, String.class), new DocumentToStringConverter())
           .put(ImmutablePair.of(ObjectId.class, String.class), new ObjectIdToStringConverter())
           .build();
 

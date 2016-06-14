@@ -15,14 +15,14 @@
       "name": "bsonTimestamp1",
       "type": {
         "type": "string",
-        "mongo-class" : "org.bson.types.BSONTimestamp"
+        "mongo-class" : "org.bson.BsonTimestamp"
       }
     },
     {
       "name": "bsonTimestamp2",
       "type": {
         "type": "long",
-        "mongo-class" : "org.bson.types.BSONTimestamp"
+        "mongo-class" : "org.bson.BsonTimestamp"
       }
     },
     {
