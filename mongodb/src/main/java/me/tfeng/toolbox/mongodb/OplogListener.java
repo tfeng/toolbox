@@ -20,17 +20,14 @@
 
 package me.tfeng.toolbox.mongodb;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.bson.BsonTimestamp;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mongodb.CursorType;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
+import com.mongodb.async.client.MongoClient;
+import com.mongodb.async.client.MongoCollection;
 
 import me.tfeng.toolbox.spring.Startable;
 
@@ -39,46 +36,13 @@ import me.tfeng.toolbox.spring.Startable;
  */
 public class OplogListener implements Startable {
 
-  private class OplogListenerThread implements Runnable {
-
-    @Override
-    public void run() {
-      Document object;
-      do {
-        try {
-          object = cursor.next();
-        } catch (Exception e) {
-          if (stopping.get()) {
-            break;
-          } else if (e instanceof RuntimeException) {
-            throw (RuntimeException) e;
-          } else {
-            throw new RuntimeException(
-                "Unexpected exception occurred while trying to read the next oplog item", e);
-          }
-        }
-
-        if (LOG.isDebugEnabled()) {
-          LOG.info("Received oplog item " + object);
-        }
-
-        OplogItem oplogItem = RecordConverter.toRecord(OplogItem.class, object);
-        handler.handle(oplogItem);
-      } while (!stopping.get());
-    }
-  }
-
   public static final String COLLECTION_NAME = "oplog.rs";
 
   public static final String DB_NAME = "local";
 
   private static final Logger LOG = LoggerFactory.getLogger(OplogListener.class);
 
-  private static final AtomicBoolean stopping = new AtomicBoolean(false);
-
   private MongoCollection<Document> collection;
-
-  private MongoCursor<Document> cursor;
 
   private OplogItemHandler handler;
 
@@ -88,8 +52,6 @@ public class OplogListener implements Startable {
 
   private BsonTimestamp startTimestamp;
 
-  private Thread thread;
-
   @Override
   public void onStart() throws Throwable {
     if (mongoClient == null || handler == null) {
@@ -98,20 +60,16 @@ public class OplogListener implements Startable {
 
     LOG.info("Connecting to " + DB_NAME + "." + COLLECTION_NAME + " in MongoDB");
     collection = mongoClient.getDatabase(DB_NAME).getCollection(COLLECTION_NAME);
-    cursor = collection.find(getQuery()).sort(getSort()).cursorType(getCursorType()).iterator();
-
-    stopping.set(false);
-
-    thread = new Thread(new OplogListenerThread());
-    thread.start();
-    LOG.info("Handler thread started");
+    collection.find(getQuery()).sort(getSort()).cursorType(getCursorType())
+        .forEach(this::process, (result, throwable) -> {
+          if (throwable != null) {
+            LOG.info("Oplog listener existed with exception", throwable);
+          }
+        });
   }
 
   @Override
   public void onStop() throws Throwable {
-    stopping.set(true);
-    cursor.close();
-    LOG.info("Waiting for handler thread to stop");
   }
 
   public void setHandler(OplogItemHandler handler) {
@@ -147,5 +105,14 @@ public class OplogListener implements Startable {
 
   protected Document getSort() {
     return new Document("$natural", 1);
+  }
+
+  protected void process(Document document) {
+    if (LOG.isDebugEnabled()) {
+      LOG.debug("Received oplog item " + document);
+    }
+
+    OplogItem oplogItem = RecordConverter.toRecord(OplogItem.class, document);
+    handler.handle(oplogItem);
   }
 }
