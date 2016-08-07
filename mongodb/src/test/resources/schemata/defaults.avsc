@@ -1,0 +1,42 @@
+{
+  "type": "record",
+  "name": "Defaults",
+  "namespace": "test",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "s",
+      "type": [ "null", "string" ],
+      "default": null
+    },
+    {
+      "name": "b",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name": "r",
+      "type": {
+        "type": "record",
+        "name": "DefaultRecord",
+        "fields": [
+          {
+            "name": "f",
+            "type": "string"
+          },
+          {
+            "name": "l",
+            "type": "long",
+            "default": 1234
+          }
+        ]
+      },
+      "default": {
+        "f": "value"
+      }
+    }
+  ]
+}

@@ -144,7 +144,8 @@ public class DocumentDecoder extends Decoder {
   public DocumentDecoder(Class<?> recordClass, Object object) {
     try {
       data = new SpecificData(recordClass.getClassLoader());
-      pushToStacks(data.getSchema(recordClass), object);
+      Schema schema = data.getSchema(recordClass);
+      pushToStacks(schema, RecordConverter.convertFromSimpleRecord(schema, object));
     } catch (IOException e) {
       throw new RuntimeException("Unable to initialize decoder", e);
     }
@@ -153,7 +154,7 @@ public class DocumentDecoder extends Decoder {
   public DocumentDecoder(Schema schema, Object object, ClassLoader classLoader) {
     try {
       data = new SpecificData(classLoader);
-      pushToStacks(schema, object);
+      pushToStacks(schema, RecordConverter.convertFromSimpleRecord(schema, object));
     } catch (IOException e) {
       throw new RuntimeException("Unable to initialize decoder", e);
     }

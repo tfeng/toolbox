@@ -24,8 +24,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.avro.Schema;
@@ -39,7 +41,11 @@ import org.apache.avro.specific.SpecificDatumReader;
 import org.bson.BSONObject;
 import org.bson.Document;
 import org.bson.types.Binary;
-import org.mortbay.util.ajax.JSON;
+
+import com.mongodb.util.JSON;
+
+import avro.shaded.com.google.common.collect.Lists;
+import me.tfeng.toolbox.avro.AvroHelper;
 
 /**
  * @author Thomas Feng (huining.feng@gmail.com)
@@ -52,6 +58,48 @@ public class RecordConverter {
 
   public static final String MONGO_TYPE_PROPERTY = "mongo-type";
 
+  public static Object convertFromSimpleRecord(Schema schema, Object object) throws IOException {
+    if (object instanceof Map && schema.getType() == Type.RECORD) {
+      Map<String, Object> node = (Map<String, Object>) object;
+      Document newNode = new Document();
+      for (Field field : schema.getFields()) {
+        String fieldName = getFieldName(field);
+        if (node.containsKey(fieldName)) {
+          newNode.put(fieldName, convertFromSimpleRecord(field.schema(), node.get(fieldName)));
+        } else if (field.defaultValue() != null) {
+          newNode.put(fieldName,
+              convertFromSimpleRecord(field.schema(), JSON.parse(field.defaultValue().toString())));
+        } else {
+          newNode.put(fieldName, null);
+        }
+      }
+      return newNode;
+    } else if (object instanceof Map && schema.getType() == Type.MAP) {
+      Map<String, Object> node = (Map<String, Object>) object;
+      Document newNode = new Document();
+      Schema valueType = schema.getValueType();
+      Iterator<Entry<String, Object>> entries = node.entrySet().iterator();
+      while (entries.hasNext()) {
+        Entry<String, Object> entry = entries.next();
+        newNode.put(entry.getKey(), convertFromSimpleRecord(valueType, entry.getValue()));
+      }
+      return newNode;
+    } else if (schema.getType() == Type.UNION) {
+      Schema type = AvroHelper.getSimpleUnionType(schema);
+      return convertFromSimpleRecord(type, object);
+    } else if (object instanceof Collection && schema.getType() == Type.ARRAY) {
+      Collection<Object> node = (Collection<Object>) object;
+      List<Object> newNode = Lists.newArrayListWithExpectedSize(node.size());
+      Iterator<Object> iterator = node.iterator();
+      while (iterator.hasNext()) {
+        newNode.add(convertFromSimpleRecord(schema.getElementType(), iterator.next()));
+      }
+      return newNode;
+    } else {
+      return object;
+    }
+  }
+
   public static Document toDocument(IndexedRecord record) {
     Document document = new Document();
     Schema schema = record.getSchema();
@@ -62,16 +110,6 @@ public class RecordConverter {
       }
     }
     return document;
-  }
-
-  public static <T extends IndexedRecord> T toRecord(Class<T> recordClass, BSONObject object) {
-    SpecificDatumReader<T> reader = new SpecificDatumReader<T>(recordClass);
-    try {
-      Decoder decoder = new DocumentDecoder(recordClass, object);
-      return reader.read(null, decoder);
-    } catch (IOException e) {
-      throw new RuntimeException("Unable to convert MongoDB object " + object + " into Avro record", e);
-    }
   }
 
   public static <T extends IndexedRecord> T toRecord(Class<T> recordClass, Document document) {
@@ -92,6 +130,16 @@ public class RecordConverter {
   public static Record toRecord(Schema schema, Document document, ClassLoader classLoader) throws IOException {
     GenericDatumReader<Record> reader = new GenericDatumReader<>(schema);
     return reader.read(null, new DocumentDecoder(schema, document, classLoader));
+  }
+
+  public static <T extends IndexedRecord> T toRecord(Class<T> recordClass, BSONObject object) {
+    SpecificDatumReader<T> reader = new SpecificDatumReader<T>(recordClass);
+    try {
+      Decoder decoder = new DocumentDecoder(recordClass, object);
+      return reader.read(null, decoder);
+    } catch (IOException e) {
+      throw new RuntimeException("Unable to convert MongoDB object " + object + " into Avro record", e);
+    }
   }
 
   protected static String getFieldName(Field field) {

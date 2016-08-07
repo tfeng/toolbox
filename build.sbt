@@ -16,4 +16,4 @@ lazy val kafka = project dependsOn(avro)
 
 lazy val dust = project dependsOn(spring)
 
-lazy val mongodb = project dependsOn(avro % "test->compile", spring)
+lazy val mongodb = project dependsOn(avro, spring)

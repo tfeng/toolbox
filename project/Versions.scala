@@ -2,7 +2,7 @@ package me.tfeng.toolbox
 
 object Versions {
 
-  val project = "0.9.2"
+  val project = "0.9.8-SNAPSHOT"
 
   val avro = "1.8.1"
 
@@ -14,7 +14,7 @@ object Versions {
 
   val hamcrest = "1.3"
 
-  val jackson = "2.8.0"
+  val jackson = "2.8.1"
 
   val junit = "4.12"
 
@@ -24,13 +24,13 @@ object Versions {
 
   val logback = "1.1.7"
 
-  val mongoDb = "3.2.2"
+  val mongoDb = "3.3.0"
 
   val scala = "2.11.8"
 
   val slf4j = "1.7.21"
 
-  val spring = "4.3.1.RELEASE"
+  val spring = "4.3.2.RELEASE"
 
   val webjarsLocator = "0.32"
 }
