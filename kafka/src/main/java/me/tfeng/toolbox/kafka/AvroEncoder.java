@@ -21,8 +21,10 @@
 package me.tfeng.toolbox.kafka;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.apache.avro.generic.IndexedRecord;
+import org.apache.kafka.common.serialization.Serializer;
 
 import kafka.serializer.Encoder;
 import kafka.utils.VerifiableProperties;
@@ -31,13 +33,26 @@ import me.tfeng.toolbox.avro.AvroHelper;
 /**
  * @author Thomas Feng (huining.feng@gmail.com)
  */
-public class AvroEncoder<T extends IndexedRecord> implements Encoder<T> {
+public class AvroEncoder<T extends IndexedRecord> implements Encoder<T>, Serializer<T> {
 
   public AvroEncoder() {
     this(null);
   }
 
   public AvroEncoder(VerifiableProperties verifiableProperties) {
+  }
+
+  @Override
+  public void close() {
+  }
+
+  @Override
+  public void configure(Map<String, ?> configs, boolean isKey) {
+  }
+
+  @Override
+  public byte[] serialize(String topic, T data) {
+    return toBytes(data);
   }
 
   @Override
