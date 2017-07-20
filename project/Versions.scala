@@ -6,7 +6,7 @@ object Versions {
 
   val avro = "1.8.2"
 
-  val commonsLang3 = "3.6"
+  val commonsText = "1.1"
 
   val dustjs = "2.7.2"
 

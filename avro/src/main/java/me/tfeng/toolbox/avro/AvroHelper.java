@@ -42,9 +42,6 @@ import org.apache.avro.specific.SpecificData;
 import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.commons.lang3.ArrayUtils;
-import org.codehaus.jackson.JsonEncoding;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -157,10 +154,8 @@ public class AvroHelper {
 
   public static String toJson(Schema schema, Object object) throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    JsonGenerator generator = new JsonFactory().createJsonGenerator(outputStream, JsonEncoding.UTF8);
-    generator.useDefaultPrettyPrinter();
     SpecificDatumWriter<Object> writer = new SpecificDatumWriter<>(schema);
-    JsonEncoder encoder = EncoderFactory.get().jsonEncoder(schema, generator);
+    JsonEncoder encoder = EncoderFactory.get().jsonEncoder(schema, outputStream);
     writer.write(object, encoder);
     encoder.flush();
     return outputStream.toString();
@@ -197,10 +192,13 @@ public class AvroHelper {
         String fieldName = field.name();
         if (node.has(fieldName)) {
           newNode.set(fieldName, convertFromSimpleRecord(field.schema(), node.get(fieldName), factory));
-        } else if (field.defaultValue() != null) {
-          newNode.set(fieldName, MAPPER.readTree(field.defaultValue().toString()));
         } else {
-          newNode.set(fieldName, factory.nullNode());
+          Object defaultValue = field.defaultVal();
+          if (defaultValue != null) {
+            newNode.set(fieldName, MAPPER.valueToTree(defaultValue));
+          } else {
+            newNode.set(fieldName, factory.nullNode());
+          }
         }
       }
       return newNode;
