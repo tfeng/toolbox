@@ -192,13 +192,10 @@ public class AvroHelper {
         String fieldName = field.name();
         if (node.has(fieldName)) {
           newNode.set(fieldName, convertFromSimpleRecord(field.schema(), node.get(fieldName), factory));
+        } else if (field.defaultValue() != null) {
+          newNode.set(fieldName, MAPPER.readTree(field.defaultValue().toString()));
         } else {
-          Object defaultValue = field.defaultVal();
-          if (defaultValue != null) {
-            newNode.set(fieldName, MAPPER.valueToTree(defaultValue));
-          } else {
-            newNode.set(fieldName, factory.nullNode());
-          }
+          newNode.set(fieldName, factory.nullNode());
         }
       }
       return newNode;

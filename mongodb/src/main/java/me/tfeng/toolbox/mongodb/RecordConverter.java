@@ -66,13 +66,10 @@ public class RecordConverter {
         String fieldName = getFieldName(field);
         if (node.containsKey(fieldName)) {
           newNode.put(fieldName, convertFromSimpleRecord(field.schema(), node.get(fieldName)));
-        } else {
-          Object defaultValue = field.defaultVal();
-          if (defaultValue != null) {
-            newNode.put(fieldName, convertFromSimpleRecord(field.schema(), defaultValue));
-          } else {
-            newNode.put(fieldName, null);
-          }
+        } else if (field.defaultValue() != null) {
+          newNode.put(fieldName, convertFromSimpleRecord(field.schema(), JSON.parse(field.defaultValue().toString())));
+        }else {
+          newNode.put(fieldName, null);
         }
       }
       return newNode;
