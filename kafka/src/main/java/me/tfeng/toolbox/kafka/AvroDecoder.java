@@ -26,6 +26,8 @@ import java.util.Map;
 import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.generic.IndexedRecord;
 import org.apache.kafka.common.serialization.Deserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kafka.serializer.Decoder;
 import kafka.utils.VerifiableProperties;
@@ -36,6 +38,8 @@ import me.tfeng.toolbox.common.Constants;
  * @author Thomas Feng (huining.feng@gmail.com)
  */
 public class AvroDecoder<T extends IndexedRecord> implements Decoder<T>, Deserializer<T> {
+
+  private static final Logger LOG = LoggerFactory.getLogger(AvroDecoder.class);
 
   private Class<? extends T> recordClass;
 
@@ -57,11 +61,15 @@ public class AvroDecoder<T extends IndexedRecord> implements Decoder<T>, Deseria
 
   @Override
   public void configure(Map<String, ?> configs, boolean isKey) {
-    String className = (String) configs.get("avro-decoder.type");
-    try {
-      recordClass = (Class<T>) getClass().getClassLoader().loadClass(className);
-    } catch (ClassNotFoundException e) {
-      throw new AvroRuntimeException("Unable to get Avro decoder class " + className);
+    if (recordClass == null) {
+      LOG.info("Record class is not set; getting it from config property avro-decoder.type");
+
+      String className = (String) configs.get("avro-decoder.type");
+      try {
+        recordClass = (Class<T>) getClass().getClassLoader().loadClass(className);
+      } catch (ClassNotFoundException e) {
+        throw new AvroRuntimeException("Unable to get Avro decoder class " + className);
+      }
     }
   }
 
