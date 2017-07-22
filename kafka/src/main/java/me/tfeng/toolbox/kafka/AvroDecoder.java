@@ -59,7 +59,7 @@ public class AvroDecoder<T extends IndexedRecord> implements Decoder<T>, Deseria
   public void configure(Map<String, ?> configs, boolean isKey) {
     String className = (String) configs.get("avro-decoder.type");
     try {
-      recordClass = (Class<T>) Class.forName(className);
+      recordClass = (Class<T>) getClass().getClassLoader().loadClass(className);
     } catch (ClassNotFoundException e) {
       throw new AvroRuntimeException("Unable to get Avro decoder class " + className);
     }
